@@ -1,5 +1,5 @@
 /*************************************************************************/
-/*  resource_importer_lunasvg.h	                                         */
+/*  resource_importer_lunasvg.cpp                                         */
 /*************************************************************************/
 /*                       This file is part of:                           */
 /*                           GODOT ENGINE                                */
@@ -27,56 +27,5 @@
 /* TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE     */
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
-#ifndef RESOURCE_IMPORTER_LUNASVG
-#define RESOURCE_IMPORTER_LUNASVG
 
-#endif // RESOURCE_IMPORTER_LUNASVG
-#include "core/io/image_loader.h"
-#include "core/string/ustring.h"
-
-#include <iostream>
-#include <memory>
-#include <sstream>
-
-#include <document.h>
-#include <stdint.h>
-
-#include "core/templates/local_vector.h"
-
-class ImageLoaderLunaSVG : public ImageFormatLoader {
-public:
-  virtual Error load_image(Ref<Image> p_image, FileAccess *p_fileaccess,
-                           bool p_force_linear, float p_scale) override {
-
-    using namespace lunasvg;
-
-    String svg = p_fileaccess->get_as_utf8_string();
-    Vector<uint8_t> data = svg.to_utf8_buffer();
-    std::unique_ptr<Document> document =
-        Document::loadFromData((const char *)data.ptr(), data.size());
-    std::uint32_t width = document->width(), height = document->height();
-    width *= p_scale;
-    height *= p_scale;
-    std::uint32_t bgColor = 0x00000000;
-    Bitmap bitmap = document->renderToBitmap(width, height, bgColor);
-    ERR_FAIL_COND_V(!bitmap.valid(), FAILED);
-    size_t size = width * height * 4; // RGBA8
-    Vector<uint8_t> result;
-    result.resize(size);
-    memcpy(result.ptrw(), bitmap.data(), size);
-    p_image->create(width, height, false, Image::FORMAT_RGBA8, result);
-    if (p_force_linear) {
-      p_image->srgb_to_linear();
-    }
-    return OK;
-  }
-
-  virtual void
-  get_recognized_extensions(List<String> *p_extensions) const override {
-    p_extensions->push_back("svg");
-    p_extensions->push_back("svgz");
-  }
-
-public:
-  virtual ~ImageLoaderLunaSVG() {}
-};
+#include "image_loader_lunasvg.h"

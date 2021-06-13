@@ -29,7 +29,7 @@
 /*************************************************************************/
 
 #include "register_types.h"
-#include "resource_importer_lunasvg.h"
+#include "image_loader_lunasvg.h"
 
 static ImageLoaderLunaSVG *image_loader_lunasvg = nullptr;
 
