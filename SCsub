@@ -1,0 +1,21 @@
+#!/usr/bin/env python
+
+Import('env')
+Import('env_modules')
+
+env_lunasvg = env_modules.Clone()
+
+env_lunasvg.Prepend(CPPPATH=['.'])
+env_lunasvg.Prepend(CPPPATH=['include'])
+env_lunasvg.Prepend(CPPPATH=['3rdparty/software'])
+env_lunasvg.Prepend(CPPPATH=['3rdparty/plutovg'])
+
+env_lunasvg.Append(CPPDEFINES=["RLOTTIE_BUILD"])
+
+env_thirdparty = env_lunasvg.Clone()
+env_thirdparty.disable_warnings()
+env_thirdparty.add_source_files(env.modules_sources, "source/*.cpp")
+env_thirdparty.add_source_files(env.modules_sources, "3rdparty/software/*.c")
+env_thirdparty.add_source_files(env.modules_sources, "3rdparty/plutovg/*.c")
+
+env_lunasvg.add_source_files(env.modules_sources, "*.cpp")
