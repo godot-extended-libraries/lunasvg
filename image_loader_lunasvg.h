@@ -39,7 +39,7 @@
 #include <memory>
 #include <sstream>
 
-#include "include/document.h"
+#include "3rdpath/lunasvg/include/document.h"
 #include <stdint.h>
 
 #include "core/templates/local_vector.h"
