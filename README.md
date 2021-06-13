@@ -2,8 +2,6 @@
 
 lunasvg is SVG rendering module for Godot Engine
 
-![svg2png generated PNG](luna.png)
-
 ## Features
 
 - Basic Shapes
