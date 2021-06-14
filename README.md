@@ -1,6 +1,6 @@
-# LunaSVG
+# LunaSVG [ARCHIVED]
 
-lunasvg is SVG rendering module for Godot Engine
+lunasvg is SVG rendering module for Godot Engine. Now in the progress of making apr.
 
 ## Features
 
